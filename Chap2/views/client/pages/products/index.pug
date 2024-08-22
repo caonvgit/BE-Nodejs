@@ -1,4 +1,18 @@
 extends ../../layouts/default.pug
-
+include ../../minxins/box-head
 block main
-  h1 Trang danh sách sản phẩm  
+  .container.my-3 
+    .row  
+      .col-12 
+        +box-head("Danh sach san pham") 
+          
+    .row 
+      .col-4.mb-3   
+        .product-item 
+            .inner-image 
+              img(src="https://picsum.photos/200/200", alt="")
+            .inner-content 
+              h3.inner-title San pham 1
+              .inner-price-new 80k
+              .inner-price-old 100k
+              .inner-discount -20%
