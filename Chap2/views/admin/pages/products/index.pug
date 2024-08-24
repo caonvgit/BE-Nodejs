@@ -1,0 +1,47 @@
+extends ../../layouts/default.pug
+
+block main 
+  
+  .card.mb3-3 
+    .card-header Bộ lọc và tìm kiếm 
+    .card-body 
+      button(class="btn btn-sm ml-1 btn-outline-success active" button-status="") Tất cả
+      button(class="btn btn-sm ml-1 btn-outline-success" button-status="active") Hoạt động
+      button(class="btn btn-sm ml-1 btn-outline-success " button-status="inactive") Dừng hoạt động
+
+
+
+  .card.mb3-3 
+    .card-header  Danh sách sản phẩm 
+    .card-body 
+      table.table.table-bodered 
+        thead 
+          tr 
+            th STT 
+            th Title 
+            th Thumbnail
+            th Price 
+            th Status 
+            th Action
+
+        tbody  
+          each product, index in products
+            tr 
+              td #{index + 1}
+              td #{product.title}
+              td 
+                img(src=product.thumbnail, alt=product.title width="30px" height="auto")
+              td #{product.price} VNĐ
+              td 
+                if(product.status == "active")
+                  a(href="#" class="text-success text text-decoration-none") Hoạt động 
+                else
+                  a(href="#" class="text-danger text text-decoration-none") Ngừng Hoạt động 
+    
+                
+              td
+                button(class="btn btn-danger btn-sm") Xoá 
+                button(class="btn btn-primary btn-sm ml-1") Sửa  
+
+
+            
