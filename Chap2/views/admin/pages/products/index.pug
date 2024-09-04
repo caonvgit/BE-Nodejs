@@ -2,6 +2,8 @@ extends ../../layouts/default.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
+
 
 
 
@@ -20,9 +22,16 @@ block main
   .card.mb3-3 
     .card-header  Danh sách sản phẩm 
     .card-body 
-      table.table.table-bodered 
+      +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+
+      table(
+        class="table table-bordered"
+        checkbox-multi
+      )
         thead 
           tr 
+            th 
+              input(type="checkbox" name="checkall")
             th STT 
             th Title 
             th Thumbnail
@@ -33,6 +42,12 @@ block main
         tbody  
           each product, index in products
             tr 
+              td
+                input(
+                  type="checkbox"
+                  name="id"
+                  value=product.id
+                )
               td #{index + 1}
               td #{product.title}
               td 
@@ -40,9 +55,21 @@ block main
               td #{product.price} VNĐ
               td 
                 if(product.status == "active")
-                  a(href="#" class="text-success text text-decoration-none") Hoạt động 
+                  a(
+                    href="javascript:;"
+                    data-status=product.status
+                    data-id=product.id
+                    button-change-status
+                    class="text-success text text-decoration-none"
+                  ) Hoạt động 
                 else
-                  a(href="#" class="text-danger text text-decoration-none") Ngừng Hoạt động 
+                  a(
+                    href="javascript:;"
+                    data-status=product.status
+                    data-id=product.id
+                    button-change-status
+                    class="text-danger text text-decoration-none"
+                  ) Ngừng Hoạt động 
     
                 
               td
@@ -51,3 +78,11 @@ block main
 
 
   +pagination(pagination)
+
+  form(
+    action=""
+    method="POST"
+    id="form-change-status"
+    data-path=`${prefixAdmin}/products/change-status`
+  ) 
+  script(src="/admin/js/product.js") 
