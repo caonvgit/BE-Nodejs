@@ -2,6 +2,11 @@ const express = require('express');
 const database = require("./config/database")
 const methodOverride = require("method-override")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
+const session = require("express-session")
+
+
+const flash = require("express-flash")
 require('dotenv').config();
 
 const route = require('./routes/client/index.route');
@@ -17,6 +22,10 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.use(methodOverride('_method'))
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(cookieParser('keyboard cat'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
 
 //Route
 routeAdmin(app);
