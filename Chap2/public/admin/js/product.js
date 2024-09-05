@@ -1,14 +1,14 @@
 //Change Status
-const buttonChangeStatus = document.querySelectorAll("[button-change-status]")
-if(buttonChangeStatus.length > 0){
-  const formChangeStatus = document.querySelector("#form-change-status")
-  const path = formChangeStatus.getAttribute("data-path")
-  buttonChangeStatus.forEach(button =>{
-    button.addEventListener("click",()=>{
+const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
+if (buttonChangeStatus.length > 0) {
+  const formChangeStatus = document.querySelector("#form-change-status");
+  const path = formChangeStatus.getAttribute("data-path");
+  buttonChangeStatus.forEach((button) => {
+    button.addEventListener("click", () => {
       const statusCurrent = button.getAttribute("data-status");
       const id = button.getAttribute("data-id");
 
-      let statusChange = statusCurrent == "active" ? "inactive" : "active"
+      let statusChange = statusCurrent == "active" ? "inactive" : "active";
 
       const action = path + `/${statusChange}/${id}?_method=PATCH`;
       formChangeStatus.action = action;
@@ -17,3 +17,22 @@ if(buttonChangeStatus.length > 0){
   });
 }
 // End Change Status
+
+// delete product
+const buttonsDelete = document.querySelectorAll("[button-delete]");
+if (buttonsDelete.length > 0) {
+  const formDeleteProduct = document.querySelector("#form-delete-product");
+  const path = formDeleteProduct.getAttribute("data-path");
+  buttonsDelete.forEach((button) => {
+    button.addEventListener("click", () => {
+      const isConfirm = confirm("Xoa ?");
+      if (isConfirm) {
+        const id = button.getAttribute("data-id");
+        const action = `${path}/${id}?_method=DELETE`;
+         formDeleteProduct.action = action;
+         formDeleteProduct.submit();
+      }
+    });
+  });
+}
+// end delete product

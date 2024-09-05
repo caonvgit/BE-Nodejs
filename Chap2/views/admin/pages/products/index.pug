@@ -70,11 +70,16 @@ block main
                     button-change-status
                     class="text-danger text text-decoration-none"
                   ) Ngừng Hoạt động 
-    
-                
+   
               td
-                button(class="btn btn-danger btn-sm") Xoá 
-                button(class="btn btn-primary btn-sm ml-1") Sửa  
+                button(
+                  class="btn btn-danger btn-sm"
+                  button-delete
+                  data-id=product.id
+                ) Xoá 
+                button(
+                  class="btn btn-primary btn-sm ml-1"
+                ) Sửa   
 
 
   +pagination(pagination)
@@ -84,5 +89,12 @@ block main
     method="POST"
     id="form-change-status"
     data-path=`${prefixAdmin}/products/change-status`
+  ) 
+
+  form(
+    action=""
+    method="POST"
+    id="form-delete-product"
+    data-path=`${prefixAdmin}/products/delete`
   ) 
   script(src="/admin/js/product.js") 

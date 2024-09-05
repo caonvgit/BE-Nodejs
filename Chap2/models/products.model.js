@@ -11,7 +11,8 @@ const productSchema = new mongoose.Schema({
   brand: String,
   status: String,
   position: String,
-  delete: Boolean,
+  deleted: Boolean,
+  deletedAt: Date,
   createdAt: { type: Date, default: Date.now },
 },{
   timestamps : true, versionKey:false

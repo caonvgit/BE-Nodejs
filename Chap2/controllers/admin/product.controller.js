@@ -9,7 +9,9 @@ module.exports.index = async (req, res) => {
 
   //Loc
   const filterStatus = filterStatusHelper(req.query);
-  let find = {};
+  let find = {
+    deleted : false,
+  };
   if (req.query.status) {
     find.status = req.query.status;
   }
@@ -67,4 +69,19 @@ module.exports.changeMulti = async (req, res) => {
       break;
   }
    res.redirect("back");
+};
+
+
+// delete /admin/products/delete/:id
+module.exports.deleteProduct = async (req, res) => {
+  const id = req.params.id;
+  // Xoa vinh vien
+  // await Product.deleteOne({ _id: id });
+
+  // Xoa mem
+  await Product.updateOne({ _id: id },{
+    deleted: true,
+    deletedAt: new Date()
+  });
+  res.redirect("back");
 };
