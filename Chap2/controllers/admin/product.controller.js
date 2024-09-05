@@ -33,7 +33,10 @@ module.exports.index = async (req, res) => {
     countProducts
   );
 
-  const products = await Product.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip);
+  const products = await Product.find(find)
+  .sort({position: 'asc'})
+  .limit(objectPagination.limitItems)
+  .skip(objectPagination.skip);
   // console.log(products);
 
   res.render("admin/pages/products/index", {
@@ -63,8 +66,19 @@ module.exports.changeMulti = async (req, res) => {
       break;
     case "inactive":
       await Product.updateMany({ _id:{$in : ids} },{ status: "inactive" });
-
       break;
+      case "delete-all":
+    await Product.updateMany({ _id:{$in : ids} },{ deleted: true,  deletedAt: new Date() });
+      break;
+      case "change-position":
+        for (const product of ids) {
+          let [id, position] = product.split("-");
+          position = parseInt(position);
+          await Product.updateOne({ _id: ids},{ 
+            position: position});
+
+        }
+        break;
     default:
       break;
   }

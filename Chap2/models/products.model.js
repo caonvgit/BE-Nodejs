@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema({
   stoke: Number,
   brand: String,
   status: String,
-  position: String,
+  position: Number,
   deleted: Boolean,
   deletedAt: Date,
   createdAt: { type: Date, default: Date.now },

@@ -36,6 +36,7 @@ block main
             th Title 
             th Thumbnail
             th Price 
+            th Position 
             th Status 
             th Action
 
@@ -53,6 +54,14 @@ block main
               td 
                 img(src=product.thumbnail, alt=product.title width="30px" height="auto")
               td #{product.price} VNĐ
+              td 
+                input(
+                  type="number"
+                  value=product.position 
+                  style="width:60px; height:30px"
+                  min="1"
+                  name="position"
+                )
               td 
                 if(product.status == "active")
                   a(
