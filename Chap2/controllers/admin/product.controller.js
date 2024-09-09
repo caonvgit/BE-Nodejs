@@ -2,6 +2,7 @@ const Product = require("../../models/products.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
+const systemConfig = require("../../config/system");
 
 // Get /admin/products
 module.exports.index = async (req, res) => {
@@ -57,6 +58,7 @@ module.exports.changeStatus = async (req, res) => {
   req.flash("success"," Cập nhập trạng thái thành công !")
   res.redirect("back");
 };
+
 // Patch /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
   const type = req.body.type;
@@ -92,7 +94,6 @@ module.exports.changeMulti = async (req, res) => {
    res.redirect("back");
 };
 
-
 // delete /admin/products/delete/:id
 module.exports.deleteProduct = async (req, res) => {
   const id = req.params.id;
@@ -107,4 +108,29 @@ module.exports.deleteProduct = async (req, res) => {
   req.flash("success",` Đã xóa thành công ${ids.length} sản phẩm ! `)
 
   res.redirect("back");
+};
+
+
+
+
+//[GET] Admin/products/create
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/products/create", {
+    pageTitle: "Thêm mới sản phẩm ",
+   
+  });
+};
+//[POST] Admin/products/createPost
+module.exports.createPost = async (req, res) => {
+  if(req.body.position == ""){
+    const countProducts = await Product.countDocuments();
+    req.body.position = countProducts + 1;
+  }else{
+    req.body.position = parseInt(req.body.position)
+  }
+  const product = new Product(req.body);
+  await product.save();
+    res.redirect(`${systemConfig.prefixAdmin}/products`)
+
+  
 };

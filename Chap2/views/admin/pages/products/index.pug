@@ -11,8 +11,7 @@ include ../../mixins/alert.pug
 
 block main 
   +alert-success(5000)
-      
-  
+       
   .card.mb3-3 
     .card-header Bộ lọc và tìm kiếm 
     .card-body 
@@ -26,8 +25,14 @@ block main
   .card.mb3-3 
     .card-header  Danh sách sản phẩm 
     .card-body 
-      +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
-
+      .row 
+        .col-8
+          +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        .col-4 
+          a(
+            href=`${prefixAdmin}/products/create`
+            class="btn btn-outline-primary"
+          ) + Thêm mới
       table(
         class="table table-bordered"
         checkbox-multi
